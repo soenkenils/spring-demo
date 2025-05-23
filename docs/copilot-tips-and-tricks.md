@@ -1,4 +1,4 @@
-# GitHub Copilot Guide
+# GitHub Copilot Guide for Engineering Teams
 
 *A practical guide to accelerate development with AI-powered coding assistance*.
 
@@ -13,14 +13,116 @@ GitHub Copilot isn't just another tool—it's a productivity multiplier that can
 
 ## Table of Contents
 
-1. [Getting Started in 5 Minutes](#getting-started-in-5-minutes)
-2. [Essential Features You'll Use Daily](#essential-features-youll-use-daily)
-3. [Team Standards & Best Practices](#team-standards--best-practices)
-4. [Real-World Examples](#real-world-examples)
-5. [Advanced Techniques](#advanced-techniques)
-6. [Security & Privacy](#security--privacy)
-7. [IDE Setup Guide](#ide-setup-guide)
-8. [Troubleshooting & FAQ](#troubleshooting--faq)
+1. [IDE Setup Guide](#ide-setup-guide)
+2. [Getting Started in 5 Minutes](#getting-started-in-5-minutes)
+3. [Essential Features You'll Use Daily](#essential-features-youll-use-daily)
+4. [Team Standards and Best Practices](#team-standards-and-best-practices)
+5. [Real-World Examples](#real-world-examples)
+6. [Advanced Techniques](#advanced-techniques)
+7. [Security and Privacy](#security-and-privacy)
+8. [Troubleshooting and FAQ](#troubleshooting-and-faq)
+
+## IDE Setup Guide
+
+### IntelliJ IDEA (Recommended for Kotlin Development)
+
+**Installation:**
+
+1. File → Settings → Plugins
+2. Search "GitHub Copilot"
+3. Install both plugins:
+   - GitHub Copilot
+   - GitHub Copilot Chat
+4. Restart IntelliJ
+5. Sign in with GitHub account
+
+**Available Features:**
+
+- ✅ Code completion (ghost text)
+- ✅ Chat interface
+- ✅ Inline chat (click Copilot icon in gutter)
+- ✅ Custom instructions (`.github/copilot-instructions.md`)
+- ✅ Slash commands: `/explain`, `/fix`, `/tests`, `/help`, `/feedback`, `/doc`, `/simplify`
+- ❌ Shared prompts (`.prompt.md` files) - not supported
+- ❌ Agent mode - not available
+- ❌ Context variables (`@workspace`, `#file`) - use attachment button instead
+
+**IntelliJ-Specific Usage:**
+
+- For inline chat: Click the **Copilot icon** next to line numbers (no keyboard shortcut available)
+- Use the **attachment button (📎)** to add files to chat context
+- Drag and drop files directly into chat
+- Keep relevant files open in editor tabs
+- Use `/help` to see all available commands
+
+**IntelliJ Workaround for Shared Prompts:**
+
+```
+# Create personal template library:
+.idea/copilot-templates/
+├── api-client.md
+├── webhook-handler.md
+├── integration-tests.md
+└── error-handling.md
+
+# Copy/paste templates into chat as needed
+```
+
+### VS Code (For Advanced Copilot Features)
+
+**Installation:**
+
+1. Open Extensions (Ctrl+Shift+X)
+2. Search "GitHub Copilot"
+3. Install:
+   - GitHub Copilot
+   - GitHub Copilot Chat
+4. Sign in with GitHub account
+
+**Available Features:**
+
+- ✅ All IntelliJ features PLUS:
+- ✅ Shared prompts (`.prompt.md` files)
+- ✅ Agent mode (preview)
+- ✅ Context variables (`@workspace`, `@terminal`, `#file`)
+- ✅ Additional slash commands (`/new`, `/terminal`, `/clear`, `/api`)
+- ✅ Terminal integration
+
+**When to Use VS Code:**
+
+- Creating shared prompt templates for the team
+- Large-scale refactoring with agent mode
+- Debugging terminal/CLI issues
+- Multi-file operations with `@workspace`
+- Creating new project scaffolding with `/new`
+
+### Recommended Dual-IDE Strategy
+
+**Primary (IntelliJ IDEA):**
+
+- Daily Kotlin development
+- Debugging and testing
+- Code navigation
+- Standard Copilot features
+
+**Secondary (VS Code):**
+
+- AI-intensive tasks
+- Creating documentation
+- Using shared prompts
+- Complex multi-file refactoring
+
+**Setup Consistency:**
+
+```bash
+# Share these between IDEs:
+.editorconfig          # Code style
+.github/
+├── copilot-instructions.md  # Works in both IDEs
+└── prompts/                 # VS Code only
+    ├── api-integration.prompt.md
+    └── test-generation.prompt.md
+```
 
 ---
 
@@ -33,9 +135,9 @@ GitHub Copilot isn't just another tool—it's a productivity multiplier that can
    - Accept with `Tab`, reject with `Esc`
    - Perfect for: Writing functions, loops, common patterns
 
-2. **Inline Chat** (`Cmd+I` / `Ctrl+I`)
-   - Quick edits without leaving your code
-   - Highlight code and ask for changes
+2. **Inline Chat**
+   - **VS Code**: Press `Cmd+I` / `Ctrl+I`
+   - **IntelliJ**: Click the Copilot icon next to line numbers
    - Perfect for: Refactoring, fixing bugs, adding features
 
 3. **Chat Window**
@@ -45,7 +147,9 @@ GitHub Copilot isn't just another tool—it's a productivity multiplier that can
 
 ### Your First Copilot Experience
 
-Try this right now:
+Try these examples right now:
+
+**1. Ghost Text (Auto-completion):**
 
 ```kotlin
 // Type this comment and press Enter:
@@ -54,40 +158,100 @@ Try this right now:
 // Copilot will suggest the implementation
 ```
 
----
+**2. Inline Chat:**
+
+- **VS Code**: Highlight any function and press `Ctrl+I` / `Cmd+I`
+- **IntelliJ**: Highlight code and click the Copilot icon in the gutter (next to line numbers)
+
+```kotlin
+// Try: "Add error handling and logging"
+```
+
+**3. Chat Window:**
+
+- **VS Code**: Press `Ctrl+Alt+I` / `Cmd+Ctrl+I`
+- **IntelliJ**: Click the Copilot Chat icon in the sidebar
+
+```
+@workspace what's our standard pattern for REST clients?
+```
 
 ## Essential Features You'll Use Daily
 
+### Keyboard Shortcuts
+
+**Quick Access:**
+
+- **Open Copilot Chat:**
+  - VS Code: `Ctrl+Alt+I` (Windows/Linux) or `Cmd+Ctrl+I` (Mac)
+  - IntelliJ: Click Copilot Chat icon in sidebar
+- **Inline Chat:**
+  - VS Code: `Ctrl+I` (Windows/Linux) or `Cmd+I` (Mac)
+  - IntelliJ: Click Copilot icon in gutter (next to line numbers)
+- **Accept suggestion**: `Tab`
+- **Dismiss suggestion**: `Esc`
+- **See alternative suggestions**: `Alt+]` or `Alt+[`
+
 ### 1. Slash Commands - Your Productivity Shortcuts
 
-Instead of typing long prompts, use these built-in commands:
+Slash commands provide quick access to common tasks:
 
-| Command | What it does | When to use | IDE Support |
-|---------|--------------|-------------|-------------|
-| `/explain` | Explains selected code | Understanding legacy code | ✅ All IDEs |
-| `/fix` | Fixes bugs in selection | Quick debugging | ✅ All IDEs |
-| `/tests` | Generates unit tests | Increasing coverage | ✅ All IDEs |
-| `/doc` | Creates documentation | API documentation | ✅ All IDEs |
-| `/help` | Shows available commands | Learning commands | ✅ All IDEs |
-| `/new` | Creates new files | Starting fresh | ⚠️ VS Code only |
-| `/review` | Reviews code quality | Before PR submission | ⚠️ Limited in IntelliJ |
+**Commands Available in IntelliJ IDEA:**
 
-**Example:**
+| Command      | What it does                     | Example                          |
+|--------------|----------------------------------|----------------------------------|
+| `/explain`   | Explains how the code works      | `/explain this authentication flow` |
+| `/fix`       | Fix problems and compile errors  | `/fix the null pointer exception` |
+| `/tests`     | Generate unit tests              | `/tests with edge cases`         |
+| `/help`      | Get help on how to use Copilot chat | `/help`                        |
+| `/feedback`  | Steps to provide feedback        | `/feedback`                      |
+| `/doc`       | Document the current selection of code | `/doc add KDoc comments`    |
+| `/simplify`  | Simplify the code                | `/simplify this complex method`  |
 
-```markdown
-Select your function, then type:
-/tests including edge cases and error scenarios
-```
+**Commands Available in VS Code:**
 
-**Note:** IntelliJ supports basic slash commands, but some advanced features may be limited compared to VS Code.
+| Command         | What it does                     | Example                          |
+|------------------|----------------------------------|----------------------------------|
+| `/explain`       | Explains how the code works      | `/explain this authentication flow` |
+| `/fix`           | Fix problems and compile errors  | `/fix the null pointer exception` |
+| `/tests`         | Generate unit tests              | `/tests with edge cases`         |
+| `/help`          | Get help on how to use Copilot chat | `/help`                        |
+| `/new`           | Scaffolds new code files         | `/new React component with TypeScript` |
+| `/newNotebook`   | Creates Jupyter notebook         | `/newNotebook for data analysis` |
+| `/api`           | Helps with VS Code extension APIs | `/api how to register a command` |
+| `/terminal`      | Explains terminal errors         | `/terminal explain this error`   |
+| `/clear`         | Clears current chat thread       | `/clear`                         |
 
-### 2. Context References - Point Copilot to the Right Information
+**💡 Pro tip:** Type `/` in chat to see all available commands for your IDE
 
-| Reference | Purpose | Example |
-|-----------|---------|---------|
-| `@workspace` | Search entire project | `@workspace find all REST clients` |
-| `#file` | Reference specific file | `#file:UserService.kt` |
-| `#selection` | Current selection | `Refactor #selection to use coroutines` |
+### 2. Context Variables - Point Copilot to the Right Information
+
+Context variables help Copilot understand what code or information you're asking about:
+
+**VS Code Context Variables:**
+
+| Variable | What it references | Example usage |
+|----------|-------------------|---------------|
+| `@workspace` | All files in workspace | `@workspace find all API endpoints` |
+| `@vscode` | VS Code commands & settings | `@vscode how to debug Kotlin` |
+| `@terminal` | Terminal contents | `@terminal what caused this error` |
+| `#file` | Specific file | `#file:UserService.kt explain the auth logic` |
+| `#selection` | Highlighted code | `optimize #selection for performance` |
+| `#codebase` | Indexed workspace | `#codebase where do we handle webhooks` |
+| `#editor` | Active editor content | `document methods in #editor` |
+
+**IntelliJ IDEA Context:**
+
+- Use the **attachment button (📎)** to add files to context
+- Drag and drop files into the chat
+- Reference open editor tabs
+- **No support for @ or # syntax** - must use UI controls
+
+**💡 Tips for Better Context:**
+
+- In VS Code: Combine variables like `@workspace #file:config.yml`
+- In IntelliJ: Keep relevant files open in tabs before asking questions
+- Be specific: "the error handling in #selection" vs just "#selection"
 
 ### 3. The 3S Principle for Better Results
 
@@ -95,13 +259,13 @@ Select your function, then type:
 
 ❌ **Don't do this:**:
 
-```markdown
+```
 Create a complete integration system with authentication, error handling, retry logic, monitoring, and reporting
 ```
 
-✅ **Do this instead:**:
+✅ **Do this instead:**
 
-```markdown
+```
 1. Create a REST client with authentication
 2. Add retry logic with exponential backoff
 3. Include error handling for common HTTP errors
@@ -109,7 +273,7 @@ Create a complete integration system with authentication, error handling, retry 
 
 ---
 
-## Team Standards & Best Practices
+## Team Standards and Best Practices
 
 ### Setting Up Repository Standards
 
@@ -217,7 +381,7 @@ class PartnerApiClient(
 
 ### Example 4: Integration Testing
 
-```markdown
+```
 /tests Create integration tests that:
 - Mock external API responses
 - Test error scenarios
@@ -256,21 +420,21 @@ data class ExternalApiResponse(
 
 #### 1. Q&A Approach
 
-```markdown
+```
 "I need to implement webhook authentication. 
 Ask me questions to understand our security requirements."
 ```
 
 #### 2. Pros/Cons Analysis
 
-```markdown
+```
 "Compare using Redis vs in-memory caching 
 for API response caching in our system"
 ```
 
 #### 3. Step-by-Step Implementation
 
-```markdown
+```
 "Help me implement API rate limiting:
 1. Design the rate limit strategy
 2. Create the implementation
@@ -278,31 +442,28 @@ for API response caching in our system"
 4. Write comprehensive tests"
 ```
 
-### Working with External APIs
+#### 4. Debugging Assistance
 
-**Effective Prompts for Integration:**
-
-```markdown
-"Create a resilient HTTP client that handles:
-- Connection timeouts
-- Rate limiting (429 responses)
-- Automatic retries with jitter
-- Circuit breaking after failures"
+```
+"Explain why this function is causing a null pointer exception 
+and suggest a fix."
 ```
 
-**For Webhook Handling:**
+#### 5. Refactoring Suggestions
 
-```markdown
-"Generate a webhook controller that:
-- Validates signatures
-- Handles duplicate deliveries
-- Processes asynchronously
-- Returns proper status codes"
+```
+"Refactor this method to improve readability and performance."
+```
+
+#### 6. Code Optimization
+
+```
+"Optimize this loop to reduce time complexity from O(n^2) to O(n log n)."
 ```
 
 ---
 
-## Security & Privacy
+## Security and Privacy
 
 ### What Copilot Sees and Stores
 
@@ -317,6 +478,8 @@ for API response caching in our system"
 - Your proprietary code (with enterprise settings)
 - Sensitive data or secrets
 - Generated outputs
+
+**💡 Note:** For organizations, enabling enterprise settings ensures that proprietary code is not stored or used for training Copilot models. Check with your administrator to confirm these settings are active.
 
 ### Security Best Practices
 
@@ -335,7 +498,7 @@ for API response caching in our system"
 3. **Configure exclusions:**
 
    ```text
-   # .github/copilot-ignore
+   # .aiignore
    **/credentials/**
    **/secrets/**
    **/*.key
@@ -359,55 +522,7 @@ for API response caching in our system"
 
 ---
 
-## IDE Setup Guide
-
-### IntelliJ IDEA (Recommended for Kotlin)
-
-**Installation:**
-
-1. File → Settings → Plugins
-2. Search "GitHub Copilot"
-3. Install and restart
-4. Sign in with GitHub account
-
-**Key Features Available:**
-
-- ✅ Code completion
-- ✅ Chat interface
-- ✅ Custom instructions
-- ❌ Shared prompts (use workaround below)
-- ❌ Agent mode
-
-**IntelliJ Workaround for Shared Prompts:**
-
-```shell
-# Create .idea/copilot-templates/
-├── api-client.md
-├── webhook-handler.md
-├── integration-tests.md
-└── error-handling.md
-
-# Copy/paste templates as needed
-```
-
-### VS Code (For Advanced AI Features)
-
-**When to use VS Code:**
-
-- Creating documentation
-- Large refactoring projects
-- Using agent mode
-- Accessing shared prompts
-
-**Dual IDE Strategy:**
-
-- Use IntelliJ for daily Kotlin development
-- Switch to VS Code for AI-intensive tasks
-- Keep both configured with same formatting rules
-
----
-
-## Troubleshooting & FAQ
+## Troubleshooting and FAQ
 
 ### Common Issues
 
@@ -437,14 +552,14 @@ for API response caching in our system"
 
 2. **Use Existing Patterns:**
 
-   ```markdown
+   ```
    Reference our existing #file:UserApiClient.kt 
    to create similar integration for orders
    ```
 
 3. **Test Generation:**
 
-   ```markdown
+   ```
    /tests with mocked responses including:
    - Success scenarios
    - 4xx and 5xx errors
