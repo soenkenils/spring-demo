@@ -1,0 +1,45 @@
+# GitHub Copilot Instructions
+
+## Tools and Frameworks
+
+JVM: The project is built using Java 21, and the code should be compatible with this version.
+
+Spring Boot: The project follows Spring Boot conventions for dependency injection and service layers.
+
+Gradle for Dependency Management: Dependencies are managed using Gradle with Kotlin DSL.
+
+Kotest for Testing: Tests are written using the "Should Spec" style, aligning with the team's preference.
+
+Our team uses Jira for tracking items of work.
+
+## Coding Style
+
+Structured Logging: Logging is done with structured messages using placeholders (e.g., logger.coInfo("Message with ID={}", id)).
+
+Kotlin Idioms: Prefer Kotlin's built-in features over Java equivalents. Use data classes, extension functions, and null safety features.
+
+Naming Conventions:
+- Classes: PascalCase (e.g., `UserService`)
+- Functions and properties: camelCase (e.g., `getUserById`, `userId`)
+- Constants: SCREAMING_SNAKE_CASE (e.g., `MAX_RETRY_COUNT`)
+- Test functions: use descriptive phrases with backticks (e.g., `` `should return user when valid ID is provided` ``)
+
+Code Organization:
+- Group related code in packages by feature, not by layer
+- Keep file size manageable (under 300 lines when possible)
+- One class per file unless they are tightly coupled inner classes
+
+Error Handling:
+- Use Result<T> for operations that can fail, rather than throwing exceptions
+- Include detailed error messages with context for debugging
+- Always properly close resources using `use` blocks
+
+Documentation:
+- Add KDoc comments for public APIs and complex functions
+- Include examples in documentation for non-trivial functions
+- Document non-obvious design decisions inline
+
+Spring Conventions:
+- Prefer constructor injection over field injection
+- Use Spring's functional programming model where appropriate
+- Follow the principle of "configuration as code" for Spring configurations
