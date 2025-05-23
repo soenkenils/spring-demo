@@ -1,10 +1,8 @@
 package me.soenke.spring_demo
 
 import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
 import me.soenke.spring_demo.config.TestContainerConfig
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Import
