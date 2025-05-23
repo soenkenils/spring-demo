@@ -1,754 +1,470 @@
-# GitHub Copilot Tips & Tricks
+# GitHub Copilot Guide
+
+*A practical guide to accelerate development with AI-powered coding assistance*.
+
+## Quick Start: Why Copilot Matters for Our Team
+
+GitHub Copilot isn't just another tool—it's a productivity multiplier that can:
+
+- **Reduce boilerplate code** writing by 40-60%
+- **Accelerate API integration** development
+- **Improve code consistency** across the team
+- **Enable faster prototyping** and experimentation
 
 ## Table of Contents
-1. [Understanding LLMs](#understanding-llms)
-2. [Core Concepts](#core-concepts)
-3. [General Usage Guidelines](#general-usage-guidelines)
-4. [Advanced Features](#advanced-features)
-5. [Prompting Strategies](#prompting-strategies)
-6. [Language & Framework Specific Tips](#language--framework-specific-tips)
-7. [IDE Support & Compatibility](#ide-support--compatibility)
-8. [Privacy & Security](#privacy--security)
-9. [Troubleshooting](#troubleshooting)
 
-## Understanding LLMs
+1. [Getting Started in 5 Minutes](#getting-started-in-5-minutes)
+2. [Essential Features You'll Use Daily](#essential-features-youll-use-daily)
+3. [Team Standards & Best Practices](#team-standards--best-practices)
+4. [Real-World Examples](#real-world-examples)
+5. [Advanced Techniques](#advanced-techniques)
+6. [Security & Privacy](#security--privacy)
+7. [IDE Setup Guide](#ide-setup-guide)
+8. [Troubleshooting & FAQ](#troubleshooting--faq)
 
-### Context
-
-Surrounding information that makes an LLM understand what you are talking about.
-The more context you have, the higher the quality of the conversation.
-
-### Tokens
-
-In the world of LLMs text is broken down into units of tokens.
-A unit can be a word, a part of a word, or even a single letter.
-Too few tokens and the LLM may lack context, too many and the LLM can be overwhelmed.
-
-### Limitations
-
-LLMs rely on patterns and probabilities they were trained on.
-Models are never perfect. They sometimes provide incorrect answers, also called *hallucinations*.
-
-### Prompts
-
-You can work with LLMs' power and limitations by combining everything into a prompt. A prompt gives a model context via tokens.
-
-**Prompt Engineering** = term for crafting prompts.
-
-**Guidelines:**
-
-* Use tokens to provide context
-* Keep prompts clear, concise, and precise
-* Break prompts into smaller chunks
-* Be specific about your requirements
-
-## Core Concepts
-
-### Code Completion vs. Chat
-
-**Code Completion (Ghost Text)**
-- Appears automatically as you type
-- Provides inline suggestions
-- Best for: Single lines, function completions, boilerplate code
-- Triggered by: Context and typing patterns
-
-**Chat Interface**
-- Interactive conversation with Copilot
-- Handles complex requests and explanations
-- Best for: Architecture decisions, debugging, learning
-- Triggered by: Explicit prompts and questions
-
-**Example:**
-```javascript
-// Ghost text suggests as you type:
-function calculateTotal(items) {
-  // Copilot suggests: return items.reduce((sum, item) => sum + item.price, 0);
-}
-
-// Chat is better for:
-// "Explain the performance implications of different array methods in JavaScript"
-```
-
-## General Usage Guidelines
-
-### Don't Let Copilot Fly the Plane
-
-You are the real pilot. Copilot is meant to be an assistant.
-Let it generate code suggestions, not the complete code base!
-
-### Use Copilot's Tools Effectively
-
-Don't use code comments as prompts!
-
-**Inline Chat (Cmd+I / Ctrl+I)**
-- Quick edits and modifications
-- Context-aware suggestions
-- Best for refactoring specific code blocks
-
-**Ghost Text**
-- Automatic code completion
-- Accepts with Tab, rejects with Esc
-- Best for writing new code
-
-**Chat Window**
-- Complex questions and explanations
-- Multi-turn conversations
-- Best for architecture and learning
-
-### Use Slash Commands
-
-Don't recreate existing prompts. Use predefined slash commands.
-
-* `/explain` - Explains selected code or functionality
-* `/fix` - Identifies and suggests fixes for bugs or issues
-* `/doc` - Generates documentation for your code
-* `/tests` - Creates unit tests for your functions or classes
-* `/help` - Shows available commands and their usage
-* `/new` - Creates new files or components
-* `/commit` - Generates commit messages based on changes
-* `/review` - Performs code review and suggests improvements
-
-**Example Usage:**
-```
-/explain #selection
-/tests for the calculateTotal function
-/doc for this React component
-```
-
-### Context is Everything
-
-**Context References:**
-* `@workspace` - References your entire workspace/solution
-* `#file` - References a specific file in your project
-* `#editor` - References the currently open file in the editor
-* `#selection` - References currently selected code
-* `#terminalSelection` - References selected text from terminal output
-
-**Example:**
-```
-Refactor #selection to use TypeScript interfaces based on the patterns in #UserService.ts
-```
-
-### The 3S Principle
-
-3S = Simple, Specific, Short.
-
-#### Simple
-
-The more code Copilot writes, the higher the chance for hallucinations!
-Break your solution into simple steps.
-
-**❌ Complex Request:**
-```
-Create a complete e-commerce website with user authentication, shopping cart, payment processing, inventory management, and admin dashboard
-```
-
-**✅ Simple Steps:**
-```
-1. Create a user registration form with email validation
-2. Add password hashing and storage
-3. Implement login functionality
-4. Create shopping cart data structure
-```
-
-#### Specific
-
-Be precise about requirements, constraints, and expected outcomes.
-
-**❌ Vague:**
-```
-Make this code better
-```
-
-**✅ Specific:**
-```
-Optimize this Python function for better performance, add type hints, and include error handling for edge cases
-```
-
-#### Short
-
-Keep prompts concise but informative. Aim for 1-3 sentences.
-
-**❌ Too Long:**
-```
-I have this function that processes user data and I need it to be faster because right now it's really slow when we have lots of users and it's causing problems in production and I think maybe we could use caching or something but I'm not sure what would be best for our specific use case since we're using Redis already but maybe we need a different approach...
-```
-
-**✅ Concise:**
-```
-Optimize this user data processing function using Redis caching to improve performance for high user loads
-```
-
-## Advanced Features
-
-### Custom Instructions (`.github/copilot-instructions.md`)
-
-**Purpose:** Repository-wide instructions automatically added to each chat request
-
-**Best Practices:**
-- Keep instructions concise and specific
-- Focus on coding standards and conventions
-- Include framework and tool preferences
-- Specify testing requirements
-
-**Example for Spring Boot + Kotlin Teams:**
-```markdown
-Always use Kotlin with Spring Boot for backend development.
-Prefer @Controller over @RestController for our REST endpoints.
-Use JdbcTemplate for database operations, not JPA/Hibernate.
-All database migrations must be Flyway scripts following V{number}__{description}.sql format.
-Write tests using Kotest with property-based testing where applicable.
-Use Gradle with Kotlin DSL (build.gradle.kts) for build scripts.
-Follow our code review checklist in docs/code-review-standards.md.
-When generating database code, use UUID for primary keys and snake_case for table names.
-```
-
-### Shared Prompts (`.github/prompts/`)
-
-**Purpose:** Reusable templates for specific tasks
-
-**File Structure:**
-```
-.github/prompts/
-├── code-review.prompt.md
-├── api-design.prompt.md
-├── security-audit.prompt.md
-└── documentation.prompt.md
-```
-
-**Example Prompt File for Spring Boot + Kotlin:**
-```markdown
----
-title: "Spring Boot Service Layer Generator"
-description: "Creates service layer with JDBC repositories for our Kotlin stack"
 ---
 
-# Spring Boot Service Layer
+## Getting Started in 5 Minutes
 
-Generate a complete service layer for {{entity_name}} following our patterns:
+### Three Ways to Use Copilot
+
+1. **Ghost Text (Auto-completion)**
+   - Just start typing—suggestions appear automatically
+   - Accept with `Tab`, reject with `Esc`
+   - Perfect for: Writing functions, loops, common patterns
+
+2. **Inline Chat** (`Cmd+I` / `Ctrl+I`)
+   - Quick edits without leaving your code
+   - Highlight code and ask for changes
+   - Perfect for: Refactoring, fixing bugs, adding features
+
+3. **Chat Window**
+   - Full conversations about architecture and design
+   - Ask complex questions, get detailed explanations
+   - Perfect for: Learning, debugging, planning
+
+### Your First Copilot Experience
+
+Try this right now:
+
+```kotlin
+// Type this comment and press Enter:
+// Create a function to validate email addresses
+
+// Copilot will suggest the implementation
+```
+
+---
+
+## Essential Features You'll Use Daily
+
+### 1. Slash Commands - Your Productivity Shortcuts
+
+Instead of typing long prompts, use these built-in commands:
+
+| Command | What it does | When to use | IDE Support |
+|---------|--------------|-------------|-------------|
+| `/explain` | Explains selected code | Understanding legacy code | ✅ All IDEs |
+| `/fix` | Fixes bugs in selection | Quick debugging | ✅ All IDEs |
+| `/tests` | Generates unit tests | Increasing coverage | ✅ All IDEs |
+| `/doc` | Creates documentation | API documentation | ✅ All IDEs |
+| `/help` | Shows available commands | Learning commands | ✅ All IDEs |
+| `/new` | Creates new files | Starting fresh | ⚠️ VS Code only |
+| `/review` | Reviews code quality | Before PR submission | ⚠️ Limited in IntelliJ |
+
+**Example:**
+
+```markdown
+Select your function, then type:
+/tests including edge cases and error scenarios
+```
+
+**Note:** IntelliJ supports basic slash commands, but some advanced features may be limited compared to VS Code.
+
+### 2. Context References - Point Copilot to the Right Information
+
+| Reference | Purpose | Example |
+|-----------|---------|---------|
+| `@workspace` | Search entire project | `@workspace find all REST clients` |
+| `#file` | Reference specific file | `#file:UserService.kt` |
+| `#selection` | Current selection | `Refactor #selection to use coroutines` |
+
+### 3. The 3S Principle for Better Results
+
+**Simple • Specific • Short**:
+
+❌ **Don't do this:**:
+
+```markdown
+Create a complete integration system with authentication, error handling, retry logic, monitoring, and reporting
+```
+
+✅ **Do this instead:**:
+
+```markdown
+1. Create a REST client with authentication
+2. Add retry logic with exponential backoff
+3. Include error handling for common HTTP errors
+```
+
+---
+
+## Team Standards & Best Practices
+
+### Setting Up Repository Standards
+
+Create `.github/copilot-instructions.md` to ensure consistent code generation:
+
+```markdown
+# Team Copilot Instructions
+
+## Technology Stack
+- Backend: Kotlin with Spring Boot
+- Database: PostgreSQL with JDBC (no ORM)
+- Testing: Kotest with property-based testing
+- Build: Gradle Kotlin DSL
+
+## Coding Standards
+- Use UUID for all primary keys
+- Database tables use snake_case
+- All API responses follow our standard format
+- Include correlation IDs for tracing
+- Wrap database operations in transactions
+
+## Integration Patterns
+- Use RestTemplate for HTTP calls
+- Implement circuit breakers for external services
+- Add comprehensive logging for debugging
+- Include retry mechanisms with backoff
+- Cache responses where appropriate
+
+## Testing Requirements
+- Minimum 80% code coverage
+- Mock all external service calls
+- Integration tests for all endpoints
+- Property-based tests for data validation
+```
+
+### Creating Reusable Prompts
+
+**⚠️ Note:** This feature is only available in VS Code. IntelliJ users should refer to the [IDE Setup Guide](#ide-setup-guide) for alternative approaches.
+
+Store common tasks in `.github/prompts/`:
+
+**Example: `api-integration.prompt.md`**
+
+```markdown
+---
+title: "API Integration Generator"
+description: "Creates robust API client implementations"
+---
+
+Generate a Spring Boot service to integrate with {{api_name}}:
 
 ## Requirements:
-- Use Kotlin with Spring Boot
-- Create @Service class with constructor injection
-- Generate @Repository with JdbcTemplate operations
-- Include proper exception handling
-- Add transaction management with @Transactional
+- RestTemplate-based HTTP client
+- Proper authentication handling
+- Circuit breaker pattern
+- Retry logic with exponential backoff
+- Comprehensive error handling
 
-## Database Context:
-- Table name: {{table_name}} (snake_case)
-- Primary key: UUID type
-- Use JdbcTemplate for all database operations
+## Implementation Details:
+- Request/response DTOs with validation
+- Logging for debugging
+- Timeout configuration
+- Response caching where applicable
 
-## Testing:
-- Generate Kotest FunSpec tests
-- Include property-based testing for validation
-- Mock dependencies using MockK
-
-## Variables:
-- Entity: {{entity_name}}
-- Table: {{table_name}}
-- Operations: {{crud_operations}}
+Variables:
+- API Name: {{api_name}}
+- Authentication Type: {{auth_type}}
+- Base URL: {{base_url}}
 ```
 
-Shared prompts must use the `.prompt.md` extension, not just `.md`. This distinguishes them from regular markdown files and enables VS Code to recognize them as Copilot prompt templates that can be invoked with slash commands like `/code-review`.
+---
 
-### Main Differences
+## Real-World Examples
 
-| Aspect | copilot-instructions.md | Shared Prompts |
-|--------|------------------------|----------------|
-| **Activation** | Automatically with every chat request | Manually via `#prompt-name` |
-| **Scope** | Repository-wide | Task-specific |
-| **Number of files** | Single file | Multiple files possible |
-| **Purpose** | Coding standards, conventions | Workflows, templates, specific tasks |
-| **Variables** | No | Yes ({{variable_name}}) |
-| **Customization** | Global preferences | Situational instructions |
+### Example 1: API Integration
 
-### Agent Mode
-
-Three options: Ask, Edit, Agent
-
-* **Ask**: Provide answers in Chat without making changes to your files
-* **Edit**: Same answer but Copilot creates and modifies files on their own
-* **Agent**: Acts more autonomously, planning and executing multi-step tasks
-
-**When to use each:**
-- **Ask**: Learning, exploring options, getting explanations
-- **Edit**: Quick fixes, refactoring, adding features to existing files
-- **Agent**: Creating new projects, complex multi-file changes
-
-### MCP (Model Context Protocol)
-
-MCP enables Copilot to connect to external data sources and tools.
-
-**Key Benefits:**
-- Real-time data access from APIs and databases
-- Integration with custom business systems
-- Extended tool capabilities
-- Standardized protocol for consistent integration
-
-**Setting up MCP:**
-1. Install MCP server for your service
-2. Configure authentication
-3. Add to Copilot settings
-4. Test with simple queries
-
-**Discovery Resources:**
-- https://mcp.so/
-- GitHub repositories tagged "mcp"
-- Vendor-specific implementations
-
-## Prompting Strategies
-
-### Q&A Prompt
-
-Let Copilot ask you questions to gather context.
-
-**Example:**
-```
-I want to create a user authentication system. Ask me questions to understand my requirements before generating code.
-```
-
-**Copilot might ask:**
-- What authentication method do you prefer? (JWT, sessions, OAuth)
-- What database are you using?
-- Do you need password reset functionality?
-- Are there specific security requirements?
-
-### Pros and Cons Prompt
-
-Get comparative analysis before implementation.
-
-**Example:**
-```
-Compare JWT vs. session-based authentication for a Node.js API. Include pros, cons, and recommend the best approach for a mobile app backend.
-```
-
-### Stepwise Chain of Thought
-
-Break complex tasks into logical steps.
-
-**Example:**
-```
-Help me implement user registration step by step:
-1. Design the database schema
-2. Create the API endpoint
-3. Add input validation
-4. Implement password hashing
-5. Add error handling
-6. Write tests
-```
-
-### Role-Based Prompting
-
-Leverage specialized expertise perspectives.
-
-**Examples:**
-```
-Act as a senior security engineer and review this authentication code for vulnerabilities.
-
-As a performance optimization expert, analyze this database query and suggest improvements.
-
-From a DevOps perspective, what monitoring should I add to this microservice?
-```
-
-### Negative Prompting
-
-Tell Copilot what NOT to do.
-
-**Example:**
-```
-Create a React component for user profiles. 
-DO NOT use class components, DO NOT include inline styles, 
-DO NOT fetch data directly in the component.
-```
-
-## Language & Framework Specific Tips
-
-### JavaScript/TypeScript
-
-**Best Practices:**
-```
-// Good context for Copilot
-interface User {
-  id: string;
-  email: string;
-  profile: UserProfile;
-}
-
-// Ask for specific patterns
-"Create a React hook for managing user state with TypeScript"
-"Generate Express middleware with proper error handling"
-```
-
-### Kotlin & Spring Boot
-
-**Framework-Specific Context:**
 ```kotlin
-// Good context for Copilot - Spring Boot with Kotlin
-@RestController
-@RequestMapping("/api/users")
-class UserController(
-    private val userService: UserService,
+// Prompt: Create a REST client with OAuth2 authentication and retry logic
+
+@Service
+class PartnerApiClient(
+    private val restTemplate: RestTemplate,
+    private val tokenService: TokenService
+) {
+    // Copilot will generate the integration code
+}
+```
+
+### Example 2: Data Validation
+
+```kotlin
+// Using inline chat: 
+// "Add comprehensive validation for incoming webhook data"
+
+// Select your webhook handler and press Cmd+I
+```
+
+### Example 3: Error Handling
+
+```kotlin
+// Chat window prompt:
+// "Create a global exception handler for our REST APIs 
+// that returns standardized error responses"
+```
+
+### Example 4: Integration Testing
+
+```markdown
+/tests Create integration tests that:
+- Mock external API responses
+- Test error scenarios
+- Verify retry behavior
+- Check timeout handling
+```
+
+---
+
+## Advanced Techniques
+
+### Custom Instructions for Your Tech Stack
+
+**For Spring Boot + Kotlin Development:**
+
+```kotlin
+// Effective context for service integration
+@Service
+class IntegrationService(
+    private val restTemplate: RestTemplate,
     private val jdbcTemplate: JdbcTemplate
 ) {
-
-// Effective prompts for our stack
-"Create a Spring Boot service layer using JDBC and @Repository pattern"
-"Generate Kotest property-based tests for this data class"
-"Create Flyway migration script for this table structure"
-"Generate @Controller with JDBC operations for user management"
-```
-
-**Best Practices for Kotlin Development:**
-```kotlin
-// Provide data class context
-data class User(
-    val id: UUID,
-    val email: String,
-    val createdAt: Instant
-)
-
-// Effective prompts
-"Create a JDBC repository for this User data class using JdbcTemplate"
-"Generate Kotest tests with property-based testing for email validation"
-"Create a Gradle build script task for running database migrations"
-```
-
-**Spring Boot + JDBC Specific Prompts:**
-```
-"Create a @Repository class using JdbcTemplate for CRUD operations on User table"
-"Generate a @Service layer that handles user business logic with transaction management"
-"Create Flyway migration V001__Create_users_table.sql for the User data class"
-"Write Kotest specs with property-based testing for user service validation"
-```
-
-### Kotest & Property-Based Testing
-
-**Effective Test Generation:**
-```kotlin
-// Provide test context
-class UserServiceTest : FunSpec({
-    test("should validate email format") {
-        checkAll(Arb.email()) { email ->
-            // Property-based test logic
-        }
-    }
-})
-
-// Specific prompts for our testing approach
-"Generate Kotest FunSpec tests with property-based testing for user validation"
-"Create MockK mocks for JDBC dependencies in Kotest"
-"Write Kotest tests that verify Flyway migration behavior"
-"Generate property-based tests using Arb generators for data validation"
-```
-
-**Gradle + Kotlin DSL:**
-```kotlin
-// Build script context
-plugins {
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.spring") version "1.9.21"
-    id("org.springframework.boot") version "3.2.0"
+    // Ask: "Create a method to sync data from external API"
 }
 
-// Effective prompts
-"Add Kotest dependencies to build.gradle.kts"
-"Create Gradle task for running Flyway migrations"
-"Configure test containers in Gradle Kotlin DSL"
+// For data mapping
+data class ExternalApiResponse(
+    val id: String,
+    val status: String,
+    val data: Map<String, Any>
+)
+// Ask: "Map this to our internal domain model with validation"
 ```
 
-## IDE Support & Compatibility
+### Intelligent Prompting Strategies
 
-### Feature Support by IDE
+#### 1. Q&A Approach
 
-Different IDEs have varying levels of support for GitHub Copilot's advanced features. Here's a comprehensive breakdown:
-
-| Feature | VS Code | IntelliJ IDEA | Visual Studio | Other IDEs |
-|---------|---------|---------------|---------------|------------|
-| **Code Completion** | ✅ Full | ✅ Full | ✅ Full | ✅ Most |
-| **Chat Interface** | ✅ Full | ✅ Full | ✅ Full | ⚠️ Limited |
-| **Custom Instructions** | ✅ Full | ✅ Supported | ✅ Supported | ❌ Not available |
-| **Shared Prompts (.prompt.md)** | ✅ Full | ❌ Not supported | ❌ Not supported | ❌ Not supported |
-| **Agent Mode** | ✅ Full (Preview) | ❌ Not available | ❌ Not available | ❌ Not available |
-| **Slash Commands** | ✅ Full | ✅ Basic | ✅ Full | ⚠️ Limited |
-| **Chat Participants** | ✅ @workspace | ✅ @project | ✅ @workspace | ❌ Varies |
-| **File References** | ✅ #file syntax | ✅ Manual attach | ✅ #file syntax | ⚠️ Limited |
-| **MCP Integration** | ✅ Full | ❌ Not available | ❌ Not available | ❌ Not available |
-
-### VS Code (Most Feature-Complete)
-
-**Unique Features:**
-- Shared prompts with `.prompt.md` files
-- Agent mode (preview)
-- Full MCP server integration
-- Advanced chat participants (@workspace, @vscode)
-- Comprehensive slash command library
-
-**Best For:**
-- Teams wanting to use shared prompt templates
-- Advanced AI-assisted development workflows
-- Experimental feature access
-
-### IntelliJ IDEA & JetBrains IDEs
-
-**Supported Features:**
-- Basic code completion and chat
-- Custom instructions (`.github/copilot-instructions.md`)
-- @project chat participant (equivalent to @workspace)
-- Manual file attachment to chat
-
-**Limitations:**
-- No shared prompts (`.prompt.md` files)
-- No agent mode
-- Limited slash command support
-- No MCP integration
-
-**Workarounds for IntelliJ Users:**
-
-1. **Replace Shared Prompts:**
-   ```markdown
-   # Create a personal prompts folder
-   .idea/prompts/
-   ├── code-review-checklist.md
-   ├── api-security-audit.md
-   └── testing-guidelines.md
-   
-   # Copy-paste content as needed
-   ```
-
-2. **Use Custom Instructions Effectively:**
-   ```markdown
-   # .github/copilot-instructions.md
-   When reviewing code, always check for:
-   - Security vulnerabilities
-   - Performance implications
-   - Test coverage
-   - Documentation completeness
-   
-   Our tech stack: Spring Boot, React, PostgreSQL
-   Always use our established patterns in the /patterns directory.
-   ```
-
-3. **Manual Context Management:**
-   - Keep relevant files open
-   - Use @project for workspace context
-   - Drag-and-drop files into chat
-   - Reference specific classes/methods in prompts
-
-**Example IntelliJ Workflow (Current Limitations):**
-```
-# Instead of using shared prompts in VS Code:
-@project Create a Spring Boot service layer for User entity using our patterns:
-- Use @Service with constructor injection
-- Create @Repository with JdbcTemplate
-- Include Kotest tests with property-based testing
-- Follow our database naming conventions in docs/database-standards.md
-- Generate Flyway migration script
-
-# Manual context: Attach UserController.kt and existing service examples
+```markdown
+"I need to implement webhook authentication. 
+Ask me questions to understand our security requirements."
 ```
 
-**When to Consider VS Code for AI Tasks:**
+#### 2. Pros/Cons Analysis
 
-**Scenario 1: Large-Scale Refactoring**
-- Use VS Code agent mode for complex multi-file refactoring
-- Leverage project-wide context understanding
-- Return to IntelliJ for implementation and debugging
-
-**Scenario 2: Documentation Generation**
-- Use shared prompts for consistent documentation
-- Generate API documentation with AI assistance
-- Create team onboarding materials
-
-**Scenario 3: Architecture Planning**
-- Use agent mode for system design discussions
-- Generate architectural decision records (ADRs)
-- Plan database schema changes with AI assistance
-
-**Setup for Dual IDE Workflow:**
-```bash
-# VS Code extensions for Kotlin development
-- Kotlin Language
-- Spring Boot Extension Pack
-- GitHub Copilot + Copilot Chat
-- Gradle for Java
-
-# Sync settings between IDEs
-- Share .editorconfig
-- Use same code formatting rules
-- Consistent Git hooks and pre-commit checks
+```markdown
+"Compare using Redis vs in-memory caching 
+for API response caching in our system"
 ```
 
-### Visual Studio
+#### 3. Step-by-Step Implementation
 
-**Supported Features:**
-- Full code completion and chat
-- Custom instructions support
-- @workspace chat participant
-- File reference syntax (#file)
-- Comprehensive slash commands
+```markdown
+"Help me implement API rate limiting:
+1. Design the rate limit strategy
+2. Create the implementation
+3. Add monitoring and alerts
+4. Write comprehensive tests"
+```
 
-**Limitations:**
-- No shared prompts
-- No agent mode
-- Limited MCP integration
+### Working with External APIs
 
-### Other IDEs (Vim, Neovim, etc.)
+**Effective Prompts for Integration:**
 
-**Basic Support:**
-- Code completion (varies by implementation)
-- Limited or no chat interface
-- No advanced features
+```markdown
+"Create a resilient HTTP client that handles:
+- Connection timeouts
+- Rate limiting (429 responses)
+- Automatic retries with jitter
+- Circuit breaking after failures"
+```
 
-**Recommendations:**
-- Use vim-copilot or similar plugins for basic functionality
-- Consider using GitHub Copilot CLI for chat features
-- Supplement with web-based Copilot Chat
+**For Webhook Handling:**
 
-### Migration Strategies
+```markdown
+"Generate a webhook controller that:
+- Validates signatures
+- Handles duplicate deliveries
+- Processes asynchronously
+- Returns proper status codes"
+```
 
-**From VS Code to IntelliJ:**
-1. Convert `.prompt.md` files to documentation
-2. Consolidate common patterns into custom instructions
-3. Create personal prompt library in `.idea/` folder
-4. Train team on manual context management
+---
 
-**From IntelliJ to VS Code:**
-1. Install Copilot Chat extension
-2. Create `.github/prompts/` folder
-3. Convert personal prompts to `.prompt.md` format
-4. Set up MCP servers if needed
+## Security & Privacy
 
-### Future Compatibility
+### What Copilot Sees and Stores
 
-**Expected Developments:**
-- Shared prompts may come to other IDEs
-- Agent mode expansion to IntelliJ/Visual Studio
-- Improved MCP support across platforms
-- Standardization of chat participants
+**Copilot CAN see:**
 
-**Current Recommendation for Spring Boot + Kotlin Teams:**
-- **IntelliJ**: Primary IDE for daily development and debugging
-- **VS Code**: Secondary tool for AI-intensive tasks and team collaboration
-- **Hybrid Approach**: Switch tools based on specific task requirements
-- **Future**: Monitor IntelliJ plugin development for advanced AI features
+- Your active code and comments
+- File names and project structure
+- Open files in your IDE
 
-## Privacy & Security
+**Copilot does NOT store:**
 
-### Data Handling
-
-**What Copilot Sees:**
-- Code you're actively working on
-- Comments and documentation
-- File names and structure
-- Git commit messages (in some contexts)
-
-**What Copilot Doesn't Store:**
-- Individual user code (with proper settings)
-- Proprietary business logic
-- Sensitive data (when properly configured)
+- Your proprietary code (with enterprise settings)
+- Sensitive data or secrets
+- Generated outputs
 
 ### Security Best Practices
 
-**For Organizations:**
-1. Enable content exclusion filters
-2. Configure IP allow lists
-3. Use audit logs
-4. Implement code scanning
-5. Train developers on secure prompting
+1. **Never include in prompts:**
+   - Real API keys or credentials
+   - Customer data
+   - Internal system details
+   - Production URLs or endpoints
 
-**For Developers:**
-1. Avoid putting secrets in code
-2. Review generated code for vulnerabilities
-3. Use descriptive but non-sensitive variable names
-4. Be cautious with database schemas in prompts
+2. **Always review generated code for:**
+   - Proper input validation
+   - Secure credential handling
+   - SQL injection prevention
+   - Appropriate error messages
 
-### Enterprise Controls
+3. **Configure exclusions:**
 
-**Available Security Features:**
-- Content exclusion (exclude sensitive repositories)
-- Audit logging and monitoring
-- IP restrictions
-- SSO integration
-- Policy enforcement
+   ```text
+   # .github/copilot-ignore
+   **/credentials/**
+   **/secrets/**
+   **/*.key
+   **/*.pem
+   **/application-prod.yml
+   ```
 
-## Troubleshooting
+### Handling Sensitive Integrations
 
-### Common Issues and Solutions
+**Do:**
 
-#### Poor Code Suggestions
+- Use generic names in prompts ("external API", "partner service")
+- Focus on patterns rather than specific implementations
+- Review all generated authentication code
 
-**Problem:** Copilot generates irrelevant or incorrect code
+**Don't:**
 
-**Solutions:**
-- Add more specific context
-- Break down complex requests
-- Use explicit typing and interfaces
-- Provide examples of desired patterns
-
-**Before:**
-```
-"Make this function better"
-```
-
-**After:**
-```
-"Optimize this function for performance, add TypeScript types, and include error handling for null inputs"
-```
-
-#### Inconsistent Code Style
-
-**Problem:** Generated code doesn't match project conventions
-
-**Solutions:**
-- Use `.github/copilot-instructions.md`
-- Provide style examples in prompts
-- Reference existing code files
-- Configure IDE formatting rules
-
-#### Slow Response Times
-
-**Problem:** Copilot takes too long to respond
-
-**Solutions:**
-- Reduce context size
-- Use more specific prompts
-- Check network connectivity
-- Clear IDE caches
-- Restart Copilot service
-
-#### Hallucinated APIs or Libraries
-
-**Problem:** Copilot suggests non-existent functions or libraries
-
-**Solutions:**
-- Verify library versions in prompts
-- Reference official documentation
-- Use `#fetch` for up-to-date information
-- Cross-reference generated code
-
-### Debugging Prompts
-
-**Ineffective Prompt Analysis:**
-1. Too vague or too specific?
-2. Missing context?
-3. Conflicting requirements?
-4. Outdated assumptions?
-
-**Prompt Refinement Process:**
-1. Start broad, then narrow down
-2. Add examples of desired output
-3. Specify constraints clearly
-4. Test with simple cases first
+- Include actual API endpoints in prompts
+- Share partner-specific implementation details
+- Copy production configurations
 
 ---
 
-## Contributing to This Guide
+## IDE Setup Guide
 
-This guide is a living document. To contribute:
-1. Share successful prompting patterns
-2. Report issues and solutions
-3. Add language-specific tips
-4. Suggest new sections
+### IntelliJ IDEA (Recommended for Kotlin)
 
-Remember: The key to effective Copilot usage is treating it as a collaborative partner, not a replacement for your expertise and judgment.
+**Installation:**
+
+1. File → Settings → Plugins
+2. Search "GitHub Copilot"
+3. Install and restart
+4. Sign in with GitHub account
+
+**Key Features Available:**
+
+- ✅ Code completion
+- ✅ Chat interface
+- ✅ Custom instructions
+- ❌ Shared prompts (use workaround below)
+- ❌ Agent mode
+
+**IntelliJ Workaround for Shared Prompts:**
+
+```shell
+# Create .idea/copilot-templates/
+├── api-client.md
+├── webhook-handler.md
+├── integration-tests.md
+└── error-handling.md
+
+# Copy/paste templates as needed
+```
+
+### VS Code (For Advanced AI Features)
+
+**When to use VS Code:**
+
+- Creating documentation
+- Large refactoring projects
+- Using agent mode
+- Accessing shared prompts
+
+**Dual IDE Strategy:**
+
+- Use IntelliJ for daily Kotlin development
+- Switch to VS Code for AI-intensive tasks
+- Keep both configured with same formatting rules
+
+---
+
+## Troubleshooting & FAQ
+
+### Common Issues
+
+**Q: Copilot suggests outdated library versions**:
+
+- A: Specify versions in your prompt: "Use Spring Boot 3.2 with Kotlin 1.9"
+
+**Q: Generated code doesn't match our patterns**:
+
+- A: Update `.github/copilot-instructions.md` with specific examples
+
+**Q: Copilot is slow or unresponsive**:
+
+- A: Check network connection, restart IDE, clear caches
+
+### Best Practices for API Integration
+
+1. **Provide Context:**
+
+   ```kotlin
+   // Good: Specific about requirements
+   // Create a REST client with OAuth2, retry logic, and circuit breaker
+   
+   // Bad: Too vague
+   // Make an API call
+   ```
+
+2. **Use Existing Patterns:**
+
+   ```markdown
+   Reference our existing #file:UserApiClient.kt 
+   to create similar integration for orders
+   ```
+
+3. **Test Generation:**
+
+   ```markdown
+   /tests with mocked responses including:
+   - Success scenarios
+   - 4xx and 5xx errors
+   - Timeout cases
+   - Malformed responses
+   ```
+
+### Getting Help
+
+- **Internal**: Share successful prompts in our team channel
+- **GitHub**: Check Copilot documentation
+- **Community**: Stack Overflow `github-copilot` tag
+
+---
+
+## Next Steps
+
+1. **Install Copilot** in your IDE today
+2. **Try the examples** in this guide
+3. **Share your experience** with the team
+4. **Contribute** your own tips and patterns
+
+Remember: Copilot is a tool to amplify your expertise, not replace it. Use it to handle repetitive tasks so you can focus on solving complex integration challenges.
