@@ -15,21 +15,21 @@ import org.springframework.test.context.ActiveProfiles
 @Import(TestContainerConfig::class)
 @ActiveProfiles("test")
 class ExampleServiceTest : ShouldSpec({
-    
+
     context("ExampleService") {
         should("return correct greeting when name is provided") {
             val exampleService = ExampleService()
             val result = exampleService.greet("World")
             result shouldBe "Hello, World!"
         }
-        
+
         should("return default greeting when name is empty") {
             val exampleService = ExampleService()
             val result = exampleService.greet("")
             result shouldBe "Hello, Guest!"
         }
     }
-    
+
 })
 
 /**
