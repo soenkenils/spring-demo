@@ -20,6 +20,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.flywaydb:flyway-database-postgresql")
@@ -34,6 +35,9 @@ dependencies {
 	testImplementation("io.kotest:kotest-property:$kotestVersion")
 	testImplementation("io.kotest:kotest-framework-datatest:$kotestVersion")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+	
+	// MockK
+	testImplementation("io.mockk:mockk:1.13.9")
 	
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit-vintage-engine")
