@@ -1,0 +1,55 @@
+# EditorConfig for Spring Demo project
+# https://editorconfig.org/
+
+# top-most EditorConfig file
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
+
+# Kotlin files
+[*.{kt,kts}]
+# Follow Kotlin coding conventions
+indent_size = 4
+# Use wildcards for imports
+ij_kotlin_name_count_to_use_star_import = 5
+ij_kotlin_name_count_to_use_star_import_for_members = 3
+# Trailing comma
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+# Always use braces for control statements
+ktlint_standard_no-unit-return = disabled
+ktlint_standard_trailing-comma-on-declaration-site = enabled
+ktlint_standard_trailing-comma-on-call-site = enabled
+
+# Gradle files
+[*.gradle.kts]
+indent_size = 4
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# XML files
+[*.xml]
+indent_size = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Properties files
+[*.properties]
+indent_size = 2
+
+# Shell scripts
+[*.{sh,zsh}]
+indent_size = 2
