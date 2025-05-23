@@ -66,19 +66,6 @@ data class NameResponse(
 )
 
 /**
- * Service interface for name management operations.
- */
-interface NameService {
-    /**
-     * Creates a new name if it doesn't already exist.
-     *
-     * @param name The name to create
-     * @return Result indicating success or failure with reason
-     */
-    fun createName(name: String): Result<Unit>
-}
-
-/**
  * Generic result type for operations that can fail.
  */
 sealed class Result<out T> {

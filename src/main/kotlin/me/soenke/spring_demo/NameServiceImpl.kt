@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service
  * Implementation of the NameService interface.
  */
 @Service
-class NameServiceImpl : NameService {
+class NameService {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val names = mutableSetOf<String>()
 
     /**
      * Creates a new name if it doesn't already exist.
-     * 
+     *
      * @param name The name to create
      * @return Result indicating success or failure with reason
      */
-    override fun createName(name: String): Result<Unit> {
+    fun createName(name: String): Result<Unit> {
         logger.debug("Attempting to create name: {}", mapOf("name" to name))
-        
+
         return if (names.contains(name)) {
             logger.info("Name already exists: {}", mapOf("name" to name))
             Result.Failure("Name already exists")
