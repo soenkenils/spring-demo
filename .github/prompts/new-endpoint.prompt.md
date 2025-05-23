@@ -33,11 +33,6 @@ class EndpointController {
 data class EndpointResponse(val name: String)
 ```
 
-The endpoint should be implemented in a new file in the project. The file should be named according to the endpoint's purpose and follow the project's naming conventions.
-Determine the package name based on the project's structure and the endpoint's purpose.
-
-The endpoint DTO models should be placed in the same file as the endpoint.
-
 Ask for the following before you start:
 - The purpose of the endpoint
 - The HTTP method (GET, POST, PUT, DELETE)  
@@ -50,11 +45,11 @@ Ask for the following before you start:
 
 Requirements for the HTTP endpoint:
 - The endpoint should be implemented in Kotlin and follow the best practices for Spring Boot applications.
+- Determine the package name based on the project's structure and the endpoint's purpose.
+- The endpoint DTO models should be placed in the same file as the endpoint.
 - The endpoint should be RESTful and follow best practices.
 - The endpoint should be secure and handle authentication properly.
 - The endpoint should be well-documented with clear descriptions of the request and response bodies.
 - The endpoint should handle errors gracefully and return appropriate status codes.
 - The endpoint should validate the request body and return appropriate error messages if validation fails.
 - The endpoint should be tested (unit- and integration tests) and verified to work as expected.
-
-Use the `/new-endpoint` prompt to guide the creation of new HTTP endpoints.
