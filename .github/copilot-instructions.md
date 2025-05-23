@@ -10,7 +10,7 @@
 
 ## Coding Style
 
-Structured Logging: Logging is done with structured messages using placeholders (e.g., logger.coInfo("Message with ID={}", id)).
+Structured Logging: Logging is done with structured messages using placeholders (e.g., logger.info("Message with ID={}", id)).
 
 Kotlin Idioms: Prefer Kotlin's built-in features over Java equivalents. Use data classes, extension functions, and null safety features.
 
@@ -26,7 +26,6 @@ Code Organization:
 - One class per file unless they are tightly coupled inner classes
 
 Error Handling:
-- Use Result<T> for operations that can fail, rather than throwing exceptions
 - Include detailed error messages with context for debugging
 - Always properly close resources using `use` blocks
 
@@ -47,5 +46,4 @@ Spring Conventions:
 - Group related tests in "should" blocks
 - Run tests with Gradle using the `test` task, e.g., `./gradlew test --tests MyClassNameTest`
 - Use `@SpringBootTest` for integration tests to load the full application context
-- Consider using TestContainers for integration tests that require a database
 - Consider docs/testing.md for more details on testing practices

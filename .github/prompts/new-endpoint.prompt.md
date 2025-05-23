@@ -14,6 +14,11 @@ A typical file for a new HTTP endpoint in a Spring Boot project would look like 
 ```kotlin
 package me.soenke.spring_demo
 
+import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
+
 @RestController
 class EndpointController {
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -21,11 +26,11 @@ class EndpointController {
     @GetMapping("/{{endpointUrl}}") // Replace with the actual endpoint URL
     fun endpoint(): ResponseEntity<EndpointResponse> {
         logger.info("Received request for ...")
-        return ResponseEntity.ok(EndpointResponse(greeting))
+        return ResponseEntity.ok(EndpointResponse(name="Hello, World!"))
     }
 }
 
-data class EndpointResponse(val greeting: String)
+data class EndpointResponse(val name: String)
 ```
 
 The endpoint should be implemented in a new file in the project. The file should be named according to the endpoint's purpose and follow the project's naming conventions.
