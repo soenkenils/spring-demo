@@ -19,15 +19,15 @@ class GreetingControllerTest(val restTemplate: TestRestTemplate) : ShouldSpec({
 
     context("GET /greetings") {
         should("return a non-empty greeting") {
-            val response = restTemplate.getForEntity("/greetings", String::class.java)
+            val response = restTemplate.getForEntity("/greetings", GreetingResponse::class.java)
 
             response.statusCode shouldBe HttpStatus.OK
-            response.body!!.shouldNotBeEmpty()
-            GREETINGS shouldContain response.body
+            response.body!!.message.shouldNotBeEmpty()
+            GREETINGS shouldContain response.body!!.message
         }
 
         should("return 200 OK status") {
-            val response = restTemplate.getForEntity("/greetings", String::class.java)
+            val response = restTemplate.getForEntity("/greetings", GreetingResponse::class.java)
             response.statusCode shouldBe HttpStatus.OK
         }
     }
