@@ -20,7 +20,8 @@ Review the selected Spring Boot REST endpoint in #selection or #file.
 - Constructor-based dependency injection
 - Proper HTTP status codes and response entities
 - Consistent API response format (e.g., wrapping responses)
-- Use of DTOs for request/response bodies
+- Use of DTOs for request/response bodies 
+- DTO models should be placed in the same file as the endpoint
 - Grouping endpoints by feature
 
 ### Security
@@ -28,7 +29,6 @@ Review the selected Spring Boot REST endpoint in #selection or #file.
 - Safe error messages (no sensitive info leakage)
 - CSRF protection (where applicable)
 - Proper authentication and authorization checks
-- Secure HTTP headers (e.g., via Spring Security)
 
 ### Testing
 - Unit test coverage

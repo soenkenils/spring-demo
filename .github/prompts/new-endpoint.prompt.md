@@ -15,21 +15,29 @@ A typical file for a new HTTP endpoint in a Spring Boot project would look like 
 package me.soenke.spring_demo
 
 @RestController
-class GreetingController {
+class EndpointController {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @GetMapping("/{{endpointUrl}}") // Replace with the actual endpoint URL
-    fun endpointCode(): ResponseEntity<EndpointResponse> {
+    fun endpoint(): ResponseEntity<EndpointResponse> {
         logger.info("Received request for ...")
         return ResponseEntity.ok(EndpointResponse(greeting))
     }
 }
+
+data class EndpointResponse(val greeting: String)
 ```
 
+The endpoint should be implemented in a new file in the project. The file should be named according to the endpoint's purpose and follow the project's naming conventions.
+Determine the package name based on the project's structure and the endpoint's purpose.
+
+The endpoint DTO models should be placed in the same file as the endpoint.
+
 Ask for the following before you start:
+- The purpose of the endpoint
 - The HTTP method (GET, POST, PUT, DELETE)  
 - The endpoint URL
-- The request body (if applicable)
+- The request body (if applicable) 
 - The response body
 - The authentication method (if applicable)
 - The error handling (if applicable)
@@ -42,4 +50,6 @@ Requirements for the HTTP endpoint:
 - The endpoint should be well-documented with clear descriptions of the request and response bodies.
 - The endpoint should handle errors gracefully and return appropriate status codes.
 - The endpoint should validate the request body and return appropriate error messages if validation fails.
-- The endpoint should be tested and verified to work as expected.
+- The endpoint should be tested (unit- and integration tests) and verified to work as expected.
+
+Use the `/new-endpoint` prompt to guide the creation of new HTTP endpoints.

@@ -39,3 +39,13 @@ Spring Conventions:
 - Prefer constructor injection over field injection
 - Use Spring's functional programming model where appropriate
 - Follow the principle of "configuration as code" for Spring configurations
+
+## Testing
+- Use Kotest for unit and integration tests
+- Write tests in the same package as the code being tested
+- Use descriptive names for test cases
+- Group related tests in "should" blocks
+- Run tests with Gradle using the `test` task, e.g., `./gradlew test --tests MyClassNameTest`
+- Use `@SpringBootTest` for integration tests to load the full application context
+- Consider using TestContainers for integration tests that require a database
+- Consider docs/testing.md for more details on testing practices
