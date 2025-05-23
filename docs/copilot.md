@@ -1,4 +1,4 @@
-# GitHub Copilot Guide for Engineering Teams
+# GitHub Copilot Guide
 
 *A practical guide to accelerate development with AI-powered coding assistance*.
 
