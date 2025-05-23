@@ -34,11 +34,8 @@ For tests that require the Spring context, use the following configuration:
 @SpringBootTest
 @Import(TestContainerConfig::class)  // If database access is needed
 @ActiveProfiles("test")
-class MyIntegrationTest : ShouldSpec({
-    
-    // Autowire dependencies
-    val myService by autowired<MyService>()
-    
+class MyIntegrationTest(val myService: MyService) : ShouldSpec({
+
     context("MyService integration") {
         should("interact with database correctly") {
             // Test code here
@@ -60,10 +57,11 @@ class MyIntegrationTest : ShouldSpec({
 ./gradlew test
 
 # Run specific tests
-./gradlew test --tests "me.soenke.spring_demo.example.*"
+./gradlew test --tests "MyIntegrationTest"
 ```
 
 ## Test Reports
 
 Test reports can be found at:
+
 - HTML: `build/reports/tests/test/index.html`
