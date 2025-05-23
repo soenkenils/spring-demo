@@ -2,15 +2,11 @@
 
 ## Tools and Frameworks
 
-JVM: The project is built using Java 21, and the code should be compatible with this version.
-
-Spring Boot: The project follows Spring Boot conventions for dependency injection and service layers.
-
-Gradle for Dependency Management: Dependencies are managed using Gradle with Kotlin DSL.
-
-Kotest for Testing: Tests are written using the "Should Spec" style, aligning with the team's preference.
-
-Our team uses Jira for tracking items of work.
+- JVM: The project is built using Java 21, and the code should be compatible with this version.
+- Spring Boot: The project follows Spring Boot conventions for dependency injection and service layers.
+- Gradle for Dependency Management: Dependencies are managed using Gradle with Kotlin DSL.
+- Kotest for Testing: Tests are written using the "Should Spec" style, aligning with the team's preference.
+- Our team uses Jira for tracking items of work.
 
 ## Coding Style
 
