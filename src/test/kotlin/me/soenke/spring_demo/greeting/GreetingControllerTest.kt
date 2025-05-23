@@ -1,10 +1,10 @@
-package me.soenke.spring_demo
+package me.soenke.spring_demo.greeting
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
-import me.soenke.spring_demo.GreetingController.Companion.GREETINGS
+import me.soenke.spring_demo.greeting.GreetingController.Companion.GREETINGS
 import me.soenke.spring_demo.config.TestContainerConfig
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate

@@ -1,4 +1,4 @@
-package me.soenke.spring_demo
+package me.soenke.spring_demo.name
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
