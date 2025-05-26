@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotNull
  * Controller for translating weather data into outfit moods.
  */
 @RestController
-class WeatherMoodController {
+class WeatherMoodController(private val weatherMoodService: WeatherMoodService) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -25,16 +25,16 @@ class WeatherMoodController {
      */
     @PostMapping("/weather-mood")
     fun getOutfitMood(@Valid @RequestBody weatherRequest: WeatherRequest): ResponseEntity<WeatherMoodResponse> {
-        logger.info("Received weather data: temperature={}, condition={}", weatherRequest.temperature, weatherRequest.condition)
-
-        val mood = when {
-            weatherRequest.temperature < 10 -> "cozy and warm"
-            weatherRequest.condition.equals("rainy", ignoreCase = true) -> "rainy day outfit"
-            weatherRequest.temperature in 10..20 -> "casual"
-            else -> "light and breezy"
+        logger.info("Processing weather mood request: temperature={}, condition={}", weatherRequest.temperature, weatherRequest.condition)
+        
+        try {
+            val mood = weatherMoodService.determineOutfitMood(weatherRequest)
+            logger.info("Generated outfit mood: mood={}", mood)
+            return ResponseEntity.ok(WeatherMoodResponse(mood))
+        } catch (e: Exception) {
+            logger.error("Error processing weather mood: message={}", e.message, e)
+            throw e
         }
-
-        return ResponseEntity.ok(WeatherMoodResponse(mood))
     }
 }
 
