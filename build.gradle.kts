@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -41,6 +41,7 @@ dependencies {
 	
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit-vintage-engine")
+		exclude(module = "mockito-core")
 	}
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
@@ -48,6 +49,7 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers:1.19.7")
 	testImplementation("org.testcontainers:junit-jupiter:1.19.7")
 	testImplementation("org.testcontainers:postgresql:1.19.7")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
