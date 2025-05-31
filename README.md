@@ -50,13 +50,15 @@ http http://localhost:8080/greetings
 ```
 
 ### Dad Jokes
-- **GET** `/dad-jokes` - Get a random dad joke
+- **GET** `/dad-jokes` - Get a random dad joke from the database
 
 ```shell
 curl http://localhost:8080/dad-jokes
 # or with HTTPie
 http http://localhost:8080/dad-jokes
 ```
+
+*Note: Dad jokes are stored in PostgreSQL and retrieved using Spring Data JDBC*
 
 ### Names
 - **POST** `/names` - Create a new name entry
@@ -100,7 +102,11 @@ src/
 │   ├── config/
 │   │   └── SecurityConfig.kt
 │   ├── dadjoke/
-│   │   └── DadJokeController.kt
+│   │   ├── DadJokeController.kt
+│   │   ├── model/
+│   │   │   └── DadJoke.kt
+│   │   └── repository/
+│   │       └── DadJokeRepository.kt
 │   ├── greeting/
 │   │   └── GreetingController.kt
 │   └── name/

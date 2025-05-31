@@ -284,7 +284,7 @@ Create `.github/copilot-instructions.md` to ensure consistent code generation:
 
 ## Technology Stack
 - Backend: Kotlin with Spring Boot
-- Database: PostgreSQL with JDBC (no ORM)
+- Database: PostgreSQL with Spring Data JDBC
 - Testing: Kotest with property-based testing
 - Build: Gradle Kotlin DSL
 
@@ -293,7 +293,7 @@ Create `.github/copilot-instructions.md` to ensure consistent code generation:
 - Database tables use snake_case
 - All API responses follow our standard format
 - Include correlation IDs for tracing
-- Wrap database operations in transactions
+- Use Spring Data JDBC repositories with `@Transactional` annotations
 
 ## Integration Patterns
 - Use RestTemplate for HTTP calls
@@ -402,7 +402,7 @@ class PartnerApiClient(
 @Service
 class IntegrationService(
     private val restTemplate: RestTemplate,
-    private val jdbcTemplate: JdbcTemplate
+    private val dataRepository: YourDataRepository
 ) {
     // Ask: "Create a method to sync data from external API"
 }

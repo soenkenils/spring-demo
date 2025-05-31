@@ -54,7 +54,8 @@ This is a Spring Boot project using Kotlin and Gradle. Common development comman
 
 - Uses Spring Boot DevTools for development
 - Application properties minimal (just application name)
-- Ready for JDBC-based data access patterns
+- Uses Spring Data JDBC with `CrudRepository` for data access (see `DadJokeRepository`)
+- Entity classes use Spring Data JDBC annotations (`@Table`, `@Id`, `@Column`)
 - Migration scripts should follow Flyway naming: `V{number}__{description}.sql`
 
 ## Tools and Frameworks
