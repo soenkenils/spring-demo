@@ -1,7 +1,7 @@
 plugins {
 	kotlin("jvm") version "2.2.0"
 	kotlin("plugin.spring") version "2.2.0"
-	id("org.springframework.boot") version "3.5.3"
+	id("org.springframework.boot") version "3.5.4"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -29,7 +29,7 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	
 	// Kotest
-	val kotestVersion = "5.8.1"
+	val kotestVersion = "5.9.1"
 	testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
 	testImplementation("io.kotest:kotest-property:$kotestVersion")
@@ -37,7 +37,7 @@ dependencies {
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
 	
 	// MockK
-	testImplementation("io.mockk:mockk:1.13.9")
+	testImplementation("io.mockk:mockk:1.14.5")
 	
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit-vintage-engine")
@@ -46,9 +46,9 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
-	testImplementation("org.testcontainers:testcontainers:1.19.7")
-	testImplementation("org.testcontainers:junit-jupiter:1.19.7")
-	testImplementation("org.testcontainers:postgresql:1.19.7")
+	testImplementation("org.testcontainers:testcontainers:1.21.3")
+	testImplementation("org.testcontainers:junit-jupiter:1.21.3")
+	testImplementation("org.testcontainers:postgresql:1.21.3")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
