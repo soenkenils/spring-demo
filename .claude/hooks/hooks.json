@@ -1,0 +1,66 @@
+{
+  "hooks": [
+    {
+      "name": "suggest-tests",
+      "event": "PostToolUse",
+      "description": "Reminds to create tests after creating a Controller or Service",
+      "command": "echo '💡 Reminder: Consider creating corresponding tests for this file. Use @test-generator to create comprehensive tests.'",
+      "filter": {
+        "tool_use_id": ["Write", "Edit"],
+        "file_path_pattern": "src/main/kotlin.*/(.*Controller|.*Service)\\.kt$"
+      },
+      "timeout": 5000
+    },
+    {
+      "name": "build-after-changes",
+      "event": "PostToolUse",
+      "description": "Run build after making changes to multiple source files",
+      "command": "./gradlew build",
+      "filter": {
+        "tool_use_id": ["Write", "Edit"],
+        "file_path_pattern": "src/main/kotlin.*\\.kt$",
+        "min_files_changed": 2
+      },
+      "timeout": 120000
+    },
+    {
+      "name": "test-file-changes",
+      "event": "PostToolUse",
+      "description": "Run tests related to modified main source files",
+      "command": "echo '✅ Run tests: ./gradlew test' && ./gradlew test --rerun-tasks",
+      "filter": {
+        "tool_use_id": ["Edit"],
+        "file_path_pattern": "src/main/kotlin.*\\.kt$"
+      },
+      "timeout": 60000
+    },
+    {
+      "name": "validate-migration",
+      "event": "PostToolUse",
+      "description": "Validate SQL syntax after creating migration files",
+      "command": "echo '🔍 Migration files created. Run: ./gradlew flywayMigrate' && find src/main/resources/db/migration -name '*.sql' -exec echo 'Migration: {}' \\;",
+      "filter": {
+        "tool_use_id": ["Write"],
+        "file_path_pattern": "src/main/resources/db/migration/V.*\\.sql$"
+      },
+      "timeout": 10000
+    },
+    {
+      "name": "remind-gradle-commands",
+      "event": "PostToolUse",
+      "description": "Display available Gradle commands after project modifications",
+      "command": "echo '📦 Available commands:\\n  ./gradlew build          - Build project\\n  ./gradlew test           - Run tests\\n  ./gradlew bootRun        - Run application\\n  ./gradlew flywayMigrate  - Run migrations'",
+      "filter": {
+        "tool_use_id": ["Write"],
+        "file_path_pattern": "src/main/(kotlin|resources).*"
+      },
+      "timeout": 5000
+    }
+  ],
+  "settings": {
+    "enabled": true,
+    "show_hook_execution": true,
+    "continue_on_hook_failure": true,
+    "max_concurrent_hooks": 1
+  }
+}

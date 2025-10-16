@@ -1,0 +1,56 @@
+{
+  "permissions": {
+    "allowedTools": [
+      "Bash(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Read(*)",
+      "Write(*)",
+      "Task(*)",
+      "Bash(./gradlew:*)",
+      "Bash(npm:*)",
+      "Bash(git:*)"
+    ]
+  },
+  "agents": {
+    "spring-reviewer": {
+      "description": "Code reviewer for Spring Boot patterns",
+      "model": "sonnet"
+    },
+    "test-generator": {
+      "description": "Test generation specialist for Kotest",
+      "model": "sonnet"
+    },
+    "endpoint-builder": {
+      "description": "REST API endpoint builder",
+      "model": "sonnet"
+    },
+    "migration-assistant": {
+      "description": "Database migration specialist",
+      "model": "sonnet"
+    }
+  },
+  "skills": {
+    "spring-boot-kotlin-patterns": {
+      "description": "Spring Boot + Kotlin best practices",
+      "tags": ["spring", "kotlin", "patterns"]
+    },
+    "kotest-test-patterns": {
+      "description": "Kotest testing patterns",
+      "tags": ["testing", "kotest", "kotlin"]
+    },
+    "flyway-migration-patterns": {
+      "description": "Flyway database migrations",
+      "tags": ["database", "migration", "postgresql"]
+    },
+    "rest-api-standards": {
+      "description": "REST API design standards",
+      "tags": ["api", "rest", "http"]
+    }
+  },
+  "hooks": {
+    "enabled": true,
+    "continueOnFailure": true
+  }
+}
