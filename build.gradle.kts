@@ -36,7 +36,7 @@ dependencies {
 	testImplementation("io.kotest:kotest-extensions-spring:$kotestVersion")
 	
 	// MockK
-	testImplementation("io.mockk:mockk:1.14.5")
+	testImplementation("io.mockk:mockk:1.14.6")
 	
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit-vintage-engine")
@@ -48,7 +48,7 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers:1.21.3")
 	testImplementation("org.testcontainers:junit-jupiter:1.21.3")
 	testImplementation("org.testcontainers:postgresql:1.21.3")
-	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
