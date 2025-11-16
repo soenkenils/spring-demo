@@ -12,9 +12,9 @@
 ## Stack
 
 - **Language:** Kotlin with Java 21
-- **Framework:** Spring Boot with Spring Security and Spring Data JDBC
+- **Framework:** Spring Boot with Spring Security, Spring Data JDBC, and Spring Validation
 - **Database:** PostgreSQL with Flyway migrations
-- **Testing:** Kotest with Testcontainers
+- **Testing:** Kotest with Testcontainers and MockK
 
 ## Architecture
 
@@ -55,4 +55,10 @@ class MyIntegrationTest(val myService: MyService) : ShouldSpec({
         should("work with database") { /* test code */ }
     }
 })
+```
+
+For mocking, use MockK:
+```kotlin
+val mockService = mockk<MyService>()
+every { mockService.doSomething() } returns "mocked result"
 ```
