@@ -7,12 +7,14 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 import me.soenke.spring_demo.greeting.GreetingController.Companion.GREETINGS
 import me.soenke.spring_demo.config.TestContainerConfig
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 @Import(TestContainerConfig::class)
 @ActiveProfiles("test")
 class GreetingControllerTest(val restTemplate: TestRestTemplate) : ShouldSpec({
