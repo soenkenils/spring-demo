@@ -4,11 +4,11 @@ A Spring Boot demo application built with Kotlin showcasing REST API endpoints w
 
 ## Technology Stack
 
-- **Language:** Kotlin 1.9.25 with Java 21
-- **Framework:** Spring Boot 3.4.6
+- **Language:** Kotlin 2.2.21 with Java 21
+- **Framework:** Spring Boot 3.5.7
 - **Database:** PostgreSQL 15+
 - **Build Tool:** Gradle with Kotlin DSL
-- **Testing:** Kotest, Testcontainers, MockK
+- **Testing:** Kotest 6.0.4, Testcontainers 1.21.3, MockK 1.14.6
 
 ## Prerequisites
 
@@ -71,6 +71,17 @@ curl -X POST http://localhost:8080/names \
 http POST http://localhost:8080/names name="John"
 ```
 
+### Weather Mood
+- **POST** `/weather-mood` - Get outfit mood based on weather conditions
+
+```shell
+curl -X POST http://localhost:8080/weather-mood \
+  -H "Content-Type: application/json" \
+  -d '{"temperature": 20, "condition": "sunny"}'
+# or with HTTPie
+http POST http://localhost:8080/weather-mood temperature:=20 condition="sunny"
+```
+
 ## Development Commands
 
 ### Build and Test
@@ -107,11 +118,17 @@ src/
 │   │   │   └── DadJoke.kt
 │   │   └── repository/
 │   │       └── DadJokeRepository.kt
+│   ├── error/
+│   │   ├── ErrorResponse.kt
+│   │   └── GlobalExceptionHandler.kt
 │   ├── greeting/
 │   │   └── GreetingController.kt
-│   └── name/
-│       ├── NameController.kt
-│       └── NameService.kt
+│   ├── name/
+│   │   ├── NameController.kt
+│   │   └── NameService.kt
+│   └── weather/
+│       ├── WeatherMoodController.kt
+│       └── WeatherMoodService.kt
 └── test/kotlin/
     └── ... (test files)
 ```

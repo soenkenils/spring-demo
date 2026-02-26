@@ -1,14 +1,14 @@
 package me.soenke.spring_demo.dadjoke
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import tools.jackson.module.kotlin.jacksonObjectMapper
+import tools.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldNotBe
 import me.soenke.spring_demo.config.TestDatabaseConfig
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
