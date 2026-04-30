@@ -41,3 +41,7 @@ out/
 
 ### macOS ###
 .DS_Store
+
+### Claude ###
+.claude/worktrees/
+
